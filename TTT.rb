@@ -189,11 +189,8 @@ class Computer
 
   def empty_corner
     corners = [1,3,7,9]
-    corners.each do |corner|
-      if @game.game.free_position?(corner)
-        return corner
-      end
-    end
+    corners.select! {|corner| @game.game.free_position?(corner) }
+    return corners.shuffle.first if !corners.empty?
     false
   end
 
