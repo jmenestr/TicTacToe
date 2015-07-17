@@ -5,7 +5,7 @@ class Game
   LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 
   def initialize(player1, player2, game_board = Board.new)
-    @players = [Computer.new("X",self),Human.new("Justin","O")].shuffle
+    @players = [Computer.new("X",self),Computer.new("O",self)].shuffle
     @current_player = @players[0]
     @other_player = @players[1]
     @game = game_board
@@ -163,7 +163,7 @@ class Computer
     Game::LINES.each do |winning_line|
       markers = group_positions_by_marker(winning_line)
       if markers[self.marker].length == 2
-        return markers[nil].first
+        return markers[nil].first if markers[self.marker].length == 2
       end
     end
     false

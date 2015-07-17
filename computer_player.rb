@@ -38,6 +38,7 @@ module TicTacToe
       return look_for_win if look_for_win
       return look_for_lose if look_for_lose
       return check_for_fork if check_for_fork
+      #return check_for_fork(opponent_marker) if check_for_fork(opponent_marker)
       return look_for_center if look_for_center
       return opposite_corner if opposite_corner
       return empty_corner if empty_corner
@@ -59,19 +60,21 @@ module TicTacToe
   def look_for_win
     Game::LINES.each do |winning_line|
       markers = group_positions_by_marker(winning_line)
-      if markers.keys.include?(self.marker) && markers[self.marker].length == 2
-        return markers[nil].first
+         if markers[marker].length == 2 and markers.keys.include?(nil)
+           puts markers.keys
+          choice = markers[nil].first
+           return choice
+         end
       end
-    end
-    false
+      false
   end
 
     # Checks to see if there is a winning move for opponent and if there is will block it
   def look_for_lose
     Game::LINES.each do |winning_line|
       markers = group_positions_by_marker(winning_line)
-      if markers.keys.include?(@game.other_player.marker) && markers[@game.other_player.marker].length == 2
-        return markers[nil].first
+      if markers[@game.other_player.marker].length == 2 and markers.keys.include?(nil)
+        return  markers[nil].first
       end
     end
     false
@@ -115,13 +118,15 @@ module TicTacToe
 
 
     # Fork Logic
+    # 
+    # 
     # Takes a game that that is advanced by one move and looks to see if there are 
     # two possible ways to win the game. Returns true if there are
     def possible_fork?(game_state)
       possible_wins = 0
       Game::LINES.each do |winning_line|
         markers = winning_line.group_by {|position|game_state.game.board[position]}
-        if markers.has_key?(self.marker) && markers[self.marker].length == 2
+        if  markers[marker] and markers[marker].length == 2 and markers.keys.include?(nil)
           possible_wins += 1
         end
         return true if possible_wins == 2
@@ -143,6 +148,8 @@ module TicTacToe
       end
         false
     end
+
+
 
     ##########################################################################################
   end
