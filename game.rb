@@ -6,7 +6,7 @@ module TicTacToe
     LINES = [[1,2,3],[4,5,6],[7,8,9],[1,4,7],[2,5,8],[3,6,9],[1,5,9],[3,5,7]]
 
     def initialize(player1, player2, game_board = Board.new)
-      @players = [Computer.new("X",self),Computer.new("O",self)].shuffle
+      @players = [Human.new(player1,"X"),Computer.new("O",self)].shuffle
       @current_player = @players[0]
       @other_player = @players[1]
       @game = game_board
